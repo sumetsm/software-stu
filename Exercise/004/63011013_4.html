@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="maincontainer"></div>
+    <script>
+      var main_div = document.getElementById("maincontainer");
+
+      // title ex 4
+      var head_div = document.createElement("h2"); //<h2><h2/>
+      var head_div_text = document.createTextNode("Exercise 04:JavaScript&DOM");
+      head_div.appendChild(head_div_text); //<div>More…</div>
+      main_div.appendChild(head_div);
+      // date button
+      let isButtonClicked = false;
+      let index = 0;
+      var button_div = document.createElement("div");
+      var button = document.createElement("button");
+
+      button_div.appendChild(button);
+      button.innerHTML = "Click me to display Date and Time";
+      const buttonColor = [
+        "red",
+        "green",
+        "darkblue",
+        "purple",
+        "lightGreen",
+        "lightBlue",
+      ];
+      button.onclick = function () {
+        if (isButtonClicked == false) {
+          w = new Worker("worker.js");
+          w.onmessage = function (event) {
+            button.innerHTML = event.data;
+            button.style.color = "pink";
+            button.style.backgroundColor = buttonColor[index];
+            if (index < 5) {
+              index += 1;
+            } else {
+              index = 0;
+            }
+          };
+          isButtonClicked = true;
+          button.style.position = "fixed";
+          button.style.top = 0;
+          button.style.right = 0;
+          personal_div.style.marginTop = "66px";
+        } else {
+          w.terminate();
+          button.style.position = "static";
+          isButtonClicked = false;
+          personal_div.style.marginTop = "25px";
+        }
+      };
+      main_div.appendChild(button_div);
+      // personal
+      var personal_div = document.createElement("div");
+      personal_div.style.marginTop = "25px";
+      var personal = document.createElement("a");
+      personal.href = "";
+      var personal_text = document.createTextNode("Personal Info");
+      personal.style.color = "pink";
+      personal.style.textDecorationLine = "underline";
+      let isInfoClick = false;
+
+      let info = document.createElement("div");
+      let infoPersonal = document.createElement("ul");
+
+      const infoName = document.createElement("li");
+      const infoNameText = document.createTextNode(
+        "Sumet Suansamran, ID: 63011013"
+      );
+      infoName.appendChild(infoNameText);
+      infoPersonal.appendChild(infoName);
+
+      const infoSubject = document.createElement("li");
+      const infoSubjectText = document.createTextNode(
+        "Subject: Software Studios"
+      );
+      infoSubject.appendChild(infoSubjectText);
+      infoPersonal.appendChild(infoSubject);
+
+      const infoSem = document.createElement("li");
+      const infoSemText = document.createTextNode("Semester: 2");
+      infoSem.appendChild(infoSemText);
+      infoPersonal.appendChild(infoSem);
+
+      personal.addEventListener("mouseover", function handleMouseOver() {
+        personal.style.color = "blue";
+        personal.style.backgroundColor = "yellow";
+      });
+
+      personal.addEventListener("mouseout", function handleMouseOut() {
+        personal.style.color = "pink";
+        personal.style.backgroundColor = "white";
+      });
+
+      personal.addEventListener("click", function handleOnClick(event) {
+        event.preventDefault();
+        if (isInfoClick === false) {
+          info.appendChild(infoPersonal);
+          isInfoClick = true;
+        } else {
+          info.removeChild(infoPersonal);
+          isInfoClick = false;
+        }
+      });
+      personal_div.appendChild(personal);
+      personal.appendChild(personal_text);
+      main_div.appendChild(personal_div);
+      main_div.appendChild(info);
+
+      var list_div = document.createElement("div");
+      var list_ul = document.createElement("ul");
+      var list_title = document.createElement("h1");
+      var list_title_text = document.createTextNode("Snapshort");
+      list_title.appendChild(list_title_text);
+      list_div.appendChild(list_title);
+      list_div.appendChild(list_ul);
+      var list_item = [
+        document.createElement("li"),
+        document.createElement("li"),
+        document.createElement("li"),
+        document.createElement("li"),
+      ];
+      var itemA = [
+        document.createElement("a"),
+        document.createElement("a"),
+        document.createElement("a"),
+        document.createElement("a"),
+      ];
+      var item_name = [
+        document.createTextNode("tiger"),
+        document.createTextNode("shark"),
+        document.createTextNode("snake"),
+        document.createTextNode("elephant"),
+      ];
+      for (let i = 0; i <= 3; i += 1) {
+        list_item[i].appendChild(itemA[i]);
+        itemA[i].href = "";
+        itemA[i].appendChild(item_name[i]);
+        list_ul.appendChild(list_item[i]);
+      }
+      main_div.appendChild(list_div);
+      // picture
+      const picDiv = document.createElement("div");
+      const pic = document.createElement("img");
+      pic.setAttribute(
+        "src",
+        "https://www.kmitl.ac.th/sites/default/files/styles/banner_3_1/public/2021-12/kmitlweb01.jpg?itok=f5Vg9Fjo"
+      );
+      // pic.style.height = "500px";
+      // pic.style.width = "500px";
+      pic.style.objectFit = "cover";
+      list_item[0].addEventListener("click", event => {
+        event.preventDefault();
+        pic.setAttribute(
+          "src",
+          "https://images.pexels.com/photos/46251/sumatran-tiger-tiger-big-cat-stripes-46251.jpeg?auto=compress&cs=tinysrgb&w=600"
+        );
+      });
+      list_item[1].addEventListener("click", event => {
+        event.preventDefault();
+        pic.setAttribute(
+          "src",
+          "https://media.istockphoto.com/id/1399799270/photo/extreme-close-up-of-great-white-shark-looking-directly-at-camera-smiling.jpg?b=1&s=612x612&w=0&k=20&c=pVIC6F2_-cNUkQhQV0mmB3zulxQFaqWbJfT34DLaIv8="
+        );
+      });
+      list_item[2].addEventListener("click", event => {
+        event.preventDefault();
+        pic.setAttribute(
+          "src",
+          "https://images.pexels.com/photos/34426/snake-rainbow-boa-reptile-scale.jpg?auto=compress&cs=tinysrgb&w=600"
+        );
+      });
+      list_item[3].addEventListener("click", event => {
+        event.preventDefault();
+        pic.setAttribute(
+          "src",
+          "https://images.pexels.com/photos/3739325/pexels-photo-3739325.jpeg?auto=compress&cs=tinysrgb&w=600"
+        );
+      });
+      picDiv.appendChild(pic);
+      main_div.appendChild(picDiv);
+    </script>
+  </body>
+</html>
